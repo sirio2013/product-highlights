@@ -37,6 +37,7 @@ Predefined product highlights organized in 3 groups:
 | `source/prod_highl_antip.csv` | Predefined product highlights (3 groups) |
 | `.env` | API key (GEMINI_API_KEY) — not committed to version control |
 | `.gitignore` | Excludes `.env`, `venv/`, `__pycache__/` from version control |
+| `requirements.txt` | Python dependencies (pandas, requests, python-dotenv, tqdm, openpyxl) |
 | `results.json` | Output — processed products in JSON format |
 | `results.xlsx` | Output — processed products in Excel format |
 
@@ -52,7 +53,7 @@ Predefined product highlights organized in 3 groups:
  |  products-list   |---> DataFrame (97 products)
  |  .csv            |
  |                  |
- |  prod_highl      |---> dict (3 groups, 13 highlights)
+ |  prod_highl      |---> dict (3 groups, 14 highlights)
  |  _antip.csv      |
  +--------+---------+
           |
