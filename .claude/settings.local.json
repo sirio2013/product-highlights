@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:googleapis.github.io)",
+      "WebFetch(domain:ai.google.dev)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:geminibyexample.com)",
+      "WebFetch(domain:discuss.ai.google.dev)",
+      "Bash(python script/main.py:*)",
+      "Bash(pip install:*)",
+      "Bash(dir /s \"C:\\\\Users\\\\mvalente\\\\Downloads\\\\app\\\\products-highlights\")",
+      "Bash(dir:*)",
+      "Bash(venvScriptspython -c \"import sys; sys.path.insert\\(0, ''script''\\); from data_import import import_products, import_highlights; from prompt_builder import build_prompt; print\\(''All imports OK''\\)\")",
+      "Bash(python -c:*)",
+      "Bash(python -m pip install:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
