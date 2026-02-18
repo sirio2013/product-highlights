@@ -1,17 +1,10 @@
 # CLAUDE.md
 
-<<<<<<< HEAD
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-=======
-## Project Overview
-
-Product Highlights is a Python CLI tool that uses Google Gemini AI to select and integrate product highlights into Italian pet care product descriptions. It processes CSV product data, sends prompts to Gemini, and exports results as JSON and Excel.
->>>>>>> 971c0772c8d1ad3afcb876d524f521e83e620a98
 
 ## Commands
 
 ```bash
-<<<<<<< HEAD
 # Activate virtual environment (Windows/Git Bash)
 source venv/Scripts/activate
 
@@ -27,10 +20,10 @@ python script/main.py
 
 ## Architecture
 
-Batch processing tool using Gemini AI to select product highlights and integrate them into product descriptions.
+Batch processing tool using Gemini AI to select product highlights and integrate them into Italian pet care product descriptions.
 
 **Data Flow:**
-1. Load products from `source/products-list.csv` and highlights (3 groups × 30) from `source/prod_highl.csv`
+1. Load products from `source/products-list.csv` and highlights (3 groups) from `source/prod_highl.csv`
 2. Deduplicate against existing `results.json` to skip already-processed products
 3. For each product: build Italian XML prompt → call Gemini async → extract JSON → validate highlights → save incrementally
 4. Export final results to `results.xlsx`
@@ -51,55 +44,13 @@ Batch processing tool using Gemini AI to select product highlights and integrate
 **Output Format:**
 Each product result includes: `id`, `titolo`, `descrizione-iniziale`, `product-highlights-1/2/3`, `descrizione` (HTML), `prompt`, timestamps, `duration_seconds`
 
-## Environment
+## Conventions
 
-Requires `GEMINI_API_KEY` in `.env` file.
-=======
-# Install dependencies
-pip install -r requirements.txt
-
-# Run on first N products
-python script/main.py 5
-
-# Run on all products
-python script/main.py
-```
-
-There is no test suite, linter, or CI/CD pipeline.
-
-## Architecture
-
-Entry point: `script/main.py`
-
-Pipeline: CSV import → deduplication (skip already-processed) → Gemini AI processing → JSON save → Excel export
-
-```
-script/
-  main.py            # Entry point, orchestration
-  data_import.py     # CSV loading and validation
-  prompt_builder.py  # Italian XML prompt generation for Gemini
-  gemini_client.py   # Gemini API calls, retry logic, response parsing
-  export_excel.py    # Excel export via openpyxl
-source/
-  products-list.csv  # 97 pet products (Italian)
-  prod_highl_antip.csv  # 14 predefined highlights in 3 groups
-```
-
-## Key Conventions
-
-- **Python 3.14** with type hints throughout
-- **snake_case** for functions/variables, **UPPERCASE** for constants
 - Product field names are in Italian (`titolo`, `descrizione`)
 - Prompts sent to Gemini are in Italian using XML structure
 - Console output uses `tqdm.write()` for progress-safe logging
 - Config constants defined at module level (e.g., `GEMINI_MODEL`, `MAX_RETRIES`)
-- Atomic file writes using temp file + rename pattern
-- Incremental saves to `results.json` after each product
-- Exponential backoff retry logic (max 3 attempts) for API calls
 
 ## Environment
 
-- Requires `GEMINI_API_KEY` set via environment variable or `.env` file
-- Model: `gemini-3-flash-preview` with MEDIUM thinking level
-- Output files: `results.json`, `results.xlsx`
->>>>>>> 971c0772c8d1ad3afcb876d524f521e83e620a98
+Requires `GEMINI_API_KEY` in `.env` file.
