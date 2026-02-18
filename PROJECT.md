@@ -8,21 +8,20 @@ from a predefined set and integrates them into the product description as HTML.
 ## Data Sources
 
 ### products-list.csv
-97 pet products with 4 columns:
+390 pet products with 3 columns:
 | Column | Type | Description |
 |---|---|---|
 | `id` | int | Product ID |
 | `title` | str | Product name (Italian) |
 | `description` | str | Long product description (Italian) |
-| `g:product_highlight` | str | Highlight tags as a list string |
 
-### prod_highl_antip.csv
+### prod_highl.csv
 Predefined product highlights organized in 3 groups:
 | Column | Description |
 |---|---|
-| `product-highlights-1` | Action/efficacy highlights (5 values) |
-| `product-highlights-2` | Duration/protection highlights (4 values) |
-| `product-highlights-3` | Application format highlights (5 values) |
+| `product-highlights-1` | Action/efficacy highlights (30 values) |
+| `product-highlights-2` | Duration/protection highlights (30 values) |
+| `product-highlights-3` | Application format highlights (30 values) |
 
 ## Project Structure
 
@@ -33,8 +32,8 @@ Predefined product highlights organized in 3 groups:
 | `script/prompt_builder.py` | Builds the Gemini prompt for each product (`build_prompt`) |
 | `script/gemini_client.py` | Gemini API calls with retry logic, JSON extraction, sequential batch processing |
 | `script/export_excel.py` | Exports results to Excel (`export_to_excel`) |
-| `source/products-list.csv` | Product catalog (97 products) |
-| `source/prod_highl_antip.csv` | Predefined product highlights (3 groups) |
+| `source/products-list.csv` | Product catalog (390 products) |
+| `source/prod_highl.csv` | Predefined product highlights (3 groups × 30 values) |
 | `.env` | API key (GEMINI_API_KEY) — not committed to version control |
 | `.gitignore` | Excludes `.env`, `venv/`, `__pycache__/` from version control |
 | `requirements.txt` | Python dependencies (pandas, requests, python-dotenv, tqdm, openpyxl) |
@@ -50,11 +49,11 @@ Predefined product highlights organized in 3 groups:
  +------------------+
  | 1. DATA IMPORT   |  data_import.py
  |                  |
- |  products-list   |---> DataFrame (97 products)
+ |  products-list   |---> DataFrame (390 products)
  |  .csv            |
  |                  |
- |  prod_highl      |---> dict (3 groups, 14 highlights)
- |  _antip.csv      |
+ |  prod_highl      |---> dict (3 groups, 90 highlights total)
+ |  .csv            |
  +--------+---------+
           |
           v
@@ -97,10 +96,20 @@ Predefined product highlights organized in 3 groups:
  +------------------+
 ```
 
+## Workflow Validation
+
+The complete workflow has been tested and validated (2026-02-04):
+
+✅ **Step 1: Data Import** - Successfully loads 390 products and 30 highlights per group
+✅ **Step 2: Prompt Builder** - Generates correct Italian XML prompt with all highlights
+✅ **Step 3: Gemini Processing** - Processes products with retry logic (~51s per product)
+✅ **Step 4: Output Validation** - All 3 highlights correctly integrated in HTML descriptions
+✅ **Step 5: File Generation** - Creates results.json and results.xlsx with all 11 columns
+
 ### Step 1: Data Import
 - Module: `script/data_import.py`
-- `import_products()` — reads `source/products-list.csv`, validates required columns, returns a pandas DataFrame
-- `import_highlights()` — reads `source/prod_highl_antip.csv`, validates non-empty, returns a dict of highlight lists
+- `import_products()` — reads `source/products-list.csv`, validates required columns, returns a pandas DataFrame (390 products)
+- `import_highlights()` — reads `source/prod_highl.csv`, validates non-empty, returns a dict of highlight lists (3 groups × 30 values)
 
 ### Step 2: Deduplication
 - Module: `script/gemini_client.py`

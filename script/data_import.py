@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-REQUIRED_PRODUCT_COLUMNS = {"id", "title", "description", "g:product_highlight"}
+REQUIRED_PRODUCT_COLUMNS = {"id", "title", "description"}
 
 
 def import_products(file_path: str = None) -> pd.DataFrame:
@@ -22,9 +22,6 @@ def import_products(file_path: str = None) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Products CSV missing required columns: {missing}")
 
-    # Rename columns for easier access
-    df.rename(columns={"g:product_highlight": "product_highlight"}, inplace=True)
-
     return df
 
 
@@ -35,7 +32,7 @@ def import_highlights(file_path: str = None) -> dict[str, list[str]]:
     and values are lists of non-empty highlight strings.
     """
     if file_path is None:
-        file_path = os.path.join(os.path.dirname(__file__), "..", "source", "prod_highl_antip.csv")
+        file_path = os.path.join(os.path.dirname(__file__), "..", "source", "prod_highl.csv")
 
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Highlights file not found: {file_path}")

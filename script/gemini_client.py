@@ -14,8 +14,9 @@ from prompt_builder import build_prompt
 
 load_dotenv()
 
-
+# GEMINI_MODEL = "gemini-3-pro-preview"
 GEMINI_MODEL = "gemini-3-flash-preview"
+# GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025"
 RESULTS_PATH = os.path.join(os.path.dirname(__file__), "..", "results.json")
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
