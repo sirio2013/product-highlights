@@ -3,3 +3,7 @@ venv/
 *.pyc
 .env
 .claude/
+
+# Generated outputs
+results.json
+results.xlsx
